@@ -1,16 +1,10 @@
 # restaurantapp
-
-A new Flutter project.
+A mobile application developed using Flutter framework.
+This mobile app allows customers to a restaurant to place orders on the system where drivers can view the orders and deliver them to their designated locations by following directions on a map on the mobile application.
 
 ## Getting Started
 
-This project is a starting point for a Flutter application.
+To run this application ensure that you have a flutter environment installed on your computer. Navigate to the project's root folder i.e where the .yaml file is located and run the command flutter run .
 
-A few resources to get you started if this is your first Flutter project:
+cd ..../cattle_disease_diagnosis/  && flutter run 
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
-
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
