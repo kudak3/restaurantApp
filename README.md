@@ -6,5 +6,5 @@ This mobile app allows customers to a restaurant to place orders on the system w
 
 To run this application ensure that you have a flutter environment installed on your computer. Navigate to the project's root folder i.e where the .yaml file is located and run the command flutter run .
 
-cd ..../cattle_disease_diagnosis/  && flutter run 
+cd LOCATION_OF_PROJECT/restaurant-app/  && flutter run 
 
