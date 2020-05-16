@@ -19,7 +19,7 @@ class _CustomerHomePage extends State<CustomerHomePage> {
         name: "rice and chicken",
         short_description:
             "A meal containing richly cooked rice and nicely cooked chicken",
-        price: 100.0,
+        price: 200.0,
         quantity: 1),
     Meal(
         id: 2,
