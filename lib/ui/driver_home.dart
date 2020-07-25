@@ -17,6 +17,8 @@ class _DriverHomePage extends State<DriverHomePage> {
   bool selected6 = false;
 
   Position currentPosition;
+  Position destinationPosition;
+  var latitude, longitude;
 
   _getCurrentLocation() async {
     final position = await Geolocator()
@@ -25,6 +27,7 @@ class _DriverHomePage extends State<DriverHomePage> {
     setState(() {
       currentPosition = position;
     });
+    print("==================" + currentPosition.toString());
   }
 
   @override
@@ -44,6 +47,10 @@ class _DriverHomePage extends State<DriverHomePage> {
                 InkWell(
                     onTap: () {
                       _selectionConfirmation();
+                      setState(() {
+                        latitude = -20.233422;
+                        longitude = 28.492126;
+                      });
                     },
                     child: ListTile(
                       trailing: CircleAvatar(),
@@ -53,6 +60,10 @@ class _DriverHomePage extends State<DriverHomePage> {
                 InkWell(
                     onTap: () {
                       _selectionConfirmation();
+                      setState(() {
+                        latitude = -20.261875;
+                        longitude = 28.646851;
+                      });
                     },
                     child: ListTile(
                       trailing: CircleAvatar(),
@@ -62,11 +73,15 @@ class _DriverHomePage extends State<DriverHomePage> {
                 InkWell(
                     onTap: () {
                       _selectionConfirmation();
+                      setState(() {
+                        latitude = -20.157594;
+                        longitude = 28.585510;
+                      });
                     },
                     child: ListTile(
                       trailing: CircleAvatar(),
                       title: Text("Ben Bernads"),
-                      subtitle: Text("4Chimuti Road Budiriro"),
+                      subtitle: Text("4 Chimuti Road Budiriro"),
                     ))
               ],
             ),
@@ -93,16 +108,25 @@ class _DriverHomePage extends State<DriverHomePage> {
           actions: <Widget>[
             FlatButton(
               child: Text('OK'),
-              onPressed: () async{
+              onPressed: () async {
                 await _getCurrentLocation();
                 Navigator.push(
                   context,
                   MaterialPageRoute(
                     builder: (context) => TrackDelivery(
+                      latitude: latitude,
+                      longitude: longitude,
                       currentPosition: currentPosition,
                     ),
                   ),
                 );
+              },
+            ),
+            FlatButton(
+              child: Text('No'),
+              onPressed: () async {
+                await _getCurrentLocation();
+                Navigator.of(context).pop();
               },
             ),
           ],

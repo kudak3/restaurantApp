@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
+import 'package:restaurantapp/model/api_response.dart';
 import 'package:restaurantapp/model/meal.dart';
 
 import 'package:geolocator/geolocator.dart';
+import 'package:restaurantapp/service/customer_service.dart';
 
 import 'order_page.dart';
 
@@ -13,6 +16,12 @@ class CustomerHomePage extends StatefulWidget {
 class _CustomerHomePage extends State<CustomerHomePage> {
   var _isSelected = false;
   Position currentPosition;
+
+  bool isLoading = false;
+  bool _isLoading = false;
+
+  CustomerService get customerService => GetIt.I<CustomerService>();
+
   List<Meal> meals = [
     Meal(
         id: 1,
@@ -65,6 +74,18 @@ class _CustomerHomePage extends State<CustomerHomePage> {
   double totalAmount = 0.0;
 
   List<Meal> _selectedMeals = [];
+  APIResponse<List<Meal>> _apiResponse;
+
+  getMeals() async {
+    setState(() {
+      isLoading = true;
+    });
+    _apiResponse = await customerService.getMeals();
+
+    setState(() {
+      isLoading = false;
+    });
+  }
 
   _getCurrentLocation() async {
     final position = await Geolocator()
@@ -83,20 +104,38 @@ class _CustomerHomePage extends State<CustomerHomePage> {
         title: Text('Customer Page'),
         elevation: 0,
       ),
-      body: Column(
+      body: Stack(
         children: <Widget>[
-          Expanded(
-            child: ListView(
-              padding: EdgeInsets.all(10.0),
-              children: <Widget>[
-                ...meals.map((meal) => mealCard(meal, colorScheme))
-              ],
-            ),
+          Column(
+            children: <Widget>[
+              isLoading
+                  ? (Center(
+                      child: CircularProgressIndicator(),
+                    ))
+                  : Expanded(
+                      child: ListView(
+                          padding: EdgeInsets.all(10.0),
+                          children: meals
+                              .map((meal) => mealCard(meal, colorScheme))
+                              .toList()),
+                    ),
+              SizedBox(
+                height: 10.0,
+              ),
+              _buildTotals()
+            ],
           ),
-          SizedBox(
-            height: 10.0,
-          ),
-          _buildTotals()
+          _isLoading
+              ? Container(
+                  height: 50,
+                  child: Center(
+                    child: CircularProgressIndicator(),
+                  ),
+                )
+              : Container(
+                  height: 0,
+                  width: 0,
+                )
         ],
       ),
     );
@@ -217,9 +256,10 @@ class _CustomerHomePage extends State<CustomerHomePage> {
       child: Column(
         children: <Widget>[
           RaisedButton(
-            color: Colors.green,
-            onPressed: () async{
-             await _getCurrentLocation();
+            color: Colors.purple,
+            onPressed: () async {
+              await _getCurrentLocation();
+              // _selectionConfirmation();
 
               Navigator.push(
                 context,

@@ -3,17 +3,20 @@ import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 
 import 'package:fluttertoast/fluttertoast.dart';
+
 import 'package:restaurantapp/model/api_response.dart';
 
-import 'authentication_service.dart';
-import 'landing_page.dart';
-import 'signup_page.dart';
 
-class LoginPage extends StatefulWidget {
-  _LoginPageState createState() => _LoginPageState();
+import 'authentication_service.dart';
+
+
+
+
+class SignupPage extends StatefulWidget {
+  _SignupPageState createState() => _SignupPageState();
 }
 
-class _LoginPageState extends State<LoginPage> {
+class _SignupPageState extends State<SignupPage> {
   final _formKey = GlobalKey<FormState>();
   bool _autoValidate = false;
   bool _isLoading = false;
@@ -34,7 +37,7 @@ class _LoginPageState extends State<LoginPage> {
         child: SingleChildScrollView(
           child: Column(
             children: <Widget>[
-              Image.asset('asssets/food.jpeg'),
+         
               _isLoading
                   ? Center(
                       child: Padding(
@@ -55,12 +58,29 @@ class _LoginPageState extends State<LoginPage> {
                                       10.0, 0.0, 20.0, 8.0),
                                   child: TextFormField(
                                     onSaved: (value) => setState(() {
+                                      username = value;
+                                    }),
+                                    validator: _validateUsername,
+                                    decoration: InputDecoration(
+                                        icon: Icon(Icons.person,
+                                            color: Color.fromRGBO(38, 131, 138,1)),
+                                        labelText: "Username",
+                                        hintText:
+                                            "Please Enter Your prefered username"),
+                                  ),
+                                ),
+                                const SizedBox(height: 10.0),
+                                Padding(
+                                  padding: const EdgeInsets.fromLTRB(
+                                      10.0, 0.0, 20.0, 8.0),
+                                  child: TextFormField(
+                                    onSaved: (value) => setState(() {
                                       email = value;
                                     }),
                                     validator: _validateEmail,
                                     decoration: InputDecoration(
                                         icon: Icon(Icons.person,
-                                            color: Colors.purple),
+                                            color: Color.fromRGBO(38, 131, 138,1)),
                                         labelText: "Email",
                                         hintText:
                                             "Please Enter Your Email Address"),
@@ -78,10 +98,25 @@ class _LoginPageState extends State<LoginPage> {
                                     validator: _validatePassword,
                                     decoration: InputDecoration(
                                         icon: Icon(Icons.lock,
-                                            color: Colors.purple
-                                                ),
+                                            color: Color.fromRGBO(38, 131, 138,1)),
                                         labelText: "Password",
                                         hintText: "Enter A password"),
+                                  ),
+                                ),
+                                const SizedBox(height: 10.0),
+                                Padding(
+                                  padding: const EdgeInsets.fromLTRB(
+                                      10.0, 0.0, 20.0, 8.0),
+                                  child: TextFormField(
+                                    validator: _validateConfirmPassword,
+                                    onSaved: (value) => setState(() {
+                                      confirmPassword = value;
+                                    }),
+                                    decoration: InputDecoration(
+                                        icon: Icon(Icons.phonelink_lock,
+                                            color: Color.fromRGBO(38, 131, 138,1)),
+                                        labelText: "Confirm Password",
+                                        hintText: "Confirm your  password"),
                                   ),
                                 ),
                                 const SizedBox(height: 10.0),
@@ -94,12 +129,12 @@ class _LoginPageState extends State<LoginPage> {
                                 const EdgeInsets.symmetric(horizontal: 16.0),
                             width: double.infinity,
                             child: RaisedButton(
-                              color: Colors.deepPurple,
+                              color: Color.fromRGBO(38, 131, 138,1),
                               textColor: Colors.white,
                               onPressed: () {
                                 if (_formKey.currentState.validate()) {
                                   _formKey.currentState.save();
-                                  _signIn();
+                                  _signUp();
                                 } else {
                                   setState(() {
                                     _autoValidate = true;
@@ -111,13 +146,19 @@ class _LoginPageState extends State<LoginPage> {
                                   right: 30.0,
                                   top: 16.0,
                                   bottom: 16.0),
-                              child: Text('SignIn'),
+                              child: Text('SignUp'),
                               shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(30),
+                                borderRadius: BorderRadius.circular(30.0),
                               ),
                             ),
                           ),
                           const SizedBox(height: 20.0),
+                          Row(
+                            children: <Widget>[
+                              Text("Already have an account "),
+                              GestureDetector(child: Text('Signin'),onTap: () => null,),
+                            ],
+                          ),
                         ],
                       ),
                     ),
@@ -126,6 +167,13 @@ class _LoginPageState extends State<LoginPage> {
         ),
       ),
     );
+  }
+
+  String _validateUsername(String value) {
+    if (value.length < 4)
+      return 'Please enter a username with more than 5 characters';
+    else
+      return null;
   }
 
   String _validateEmail(String value) {
@@ -145,33 +193,33 @@ class _LoginPageState extends State<LoginPage> {
       return null;
   }
 
-  _signIn() async {
-    setState(() {
-      _isLoading = true;
-    });
+  String _validateConfirmPassword(String value) {
+    if (value != _pass.text)
+      return 'Passwords do not match';
+    else
+      return null;
+  }
 
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (_) => LandingPage(),
-      ),
-    );
+  _signUp() async {
+    // setState(() {
+    //   _isLoading = true;
+    // });
 
     // APIResponse result =
-    // await authenticationService.signInWithEmail(email, password);
+    //     await authenticationService.signUpWithEmail(email, password, username);
 
     // setState(() {
     //   _isLoading = false;
     // });
 
     // if (!result.error) {
-    //   await showToast("Login successful");
-    //   Navigator.push(
-    //     context,
-    //     MaterialPageRoute(
-    //       builder: (_) => LandingPage(),
-    //     ),
-    //   );
+    //   await showToast("User successfully registered");
+    //   // Navigator.push(
+    //   //   context,
+    //   //   MaterialPageRoute(
+    //   //     builder: (_) => ChildReg(newacc: true,parent: result.data.uid,),
+    //   //   ),
+    //   // );
     // } else {
     //   showToast(result.errorMessage);
     // }
@@ -185,4 +233,6 @@ class _LoginPageState extends State<LoginPage> {
         textColor: Colors.green,
         fontSize: 16.0);
   }
+
+ 
 }

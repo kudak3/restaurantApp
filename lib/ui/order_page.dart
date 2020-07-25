@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:get_it/get_it.dart';
+import 'package:restaurantapp/model/api_response.dart';
 import 'package:restaurantapp/model/meal.dart';
 
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -8,6 +11,8 @@ import 'package:latlong/latlong.dart';
 import 'package:geolocator/geolocator.dart';
 
 import 'package:geocoder/geocoder.dart';
+import 'package:restaurantapp/service/customer_service.dart';
+import 'package:restaurantapp/ui/customer_home.dart';
 
 class OrderPage extends StatefulWidget {
   final List<Meal> meals;
@@ -22,6 +27,11 @@ class OrderPage extends StatefulWidget {
 class _OrderPageState extends State<OrderPage> {
   final _formKey = GlobalKey<FormState>();
   String address = "";
+  bool isLoading = false;
+  bool _isLoading = false;
+
+  CustomerService get customerService => GetIt.I<CustomerService>();
+  APIResponse<bool> _apiResponse = APIResponse(error: false);
 
   @override
   void initState() {
@@ -51,7 +61,7 @@ class _OrderPageState extends State<OrderPage> {
       body: Column(
         children: <Widget>[
           Container(
-            height: 180,
+            height: 100,
             decoration: BoxDecoration(
               color: Colors.white,
             ),
@@ -59,30 +69,30 @@ class _OrderPageState extends State<OrderPage> {
                 left: 20.0, right: 20.0, top: 40.0, bottom: 10.0),
             child: SingleChildScrollView(
               child: Column(
-                children: <Widget>[
-                  ...widget.meals.map(
-                    (_meal) => Column(
-                      children: <Widget>[
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: <Widget>[
-                            Text(_meal.name +
-                                "         " +
-                                "X  " +
-                                _meal.quantity.toString()),
-                            Text((_meal.price * _meal.quantity).toString()),
-                          ],
-                        ),
-                        Divider(
-                          height: 2,
-                        ),
-                        SizedBox(
-                          height: 10.0,
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
+                children: widget.meals
+                    .map(
+                      (_meal) => Column(
+                        children: <Widget>[
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: <Widget>[
+                              Text(_meal.name +
+                                  "         " +
+                                  "X  " +
+                                  _meal.quantity.toString()),
+                              Text((_meal.price * _meal.quantity).toString()),
+                            ],
+                          ),
+                          Divider(
+                            height: 2,
+                          ),
+                          SizedBox(
+                            height: 10.0,
+                          ),
+                        ],
+                      ),
+                    )
+                    .toList(),
               ),
             ),
           ),
@@ -105,28 +115,36 @@ class _OrderPageState extends State<OrderPage> {
                     height: 10.0,
                   ),
                   SingleChildScrollView(
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: <Widget>[
-                        TextFormField(
-                          controller: TextEditingController(
-                              text: address == "" ? null : address),
-                          decoration: InputDecoration(
-                            icon: Icon(Icons.not_listed_location,
-                                color: Colors.blue),
-                            labelText: "Place of delevery",
-                          ),
-                        ),
-                      ],
+                    child: TextFormField(
+                      controller: TextEditingController(
+                          text: address == "" ? null : address),
+                      decoration: InputDecoration(
+                        icon:
+                            Icon(Icons.not_listed_location, color: Colors.blue),
+                        labelText: "Place of delivery",
+                      ),
                     ),
                   ),
+                  SizedBox(
+                      width: 200,
+                      child: RaisedButton(
+                        color: Theme.of(context).primaryColor,
+                        textColor: Colors.white,
+                        child: Text("Complete Order".toUpperCase()),
+                        onPressed: () {
+                          if (_formKey.currentState.validate()) {
+                            _formKey.currentState.save();
+                            _signup();
+                            // Navigator.pushNamed(context, 'animalRegister');
+                          }
+                        },
+                      )),
                 ],
               ),
             ),
           ),
-          Card(
-            height:220,
-            
+          Container(
+            height: 250,
             child: FlutterMap(
               options: MapOptions(
                 center: LatLng(widget.currentPosition.latitude,
@@ -156,7 +174,10 @@ class _OrderPageState extends State<OrderPage> {
                       builder: (ctx) => new Container(
                         child: IconButton(
                           onPressed: null,
-                          icon: FaIcon(FontAwesomeIcons.mapMarker),
+                          icon: Icon(
+                            Icons.place,
+                            color: Colors.purple,
+                          ),
                           iconSize: 45.0,
                           color: Color(0xff311b92),
                         ),
@@ -167,8 +188,60 @@ class _OrderPageState extends State<OrderPage> {
               ],
             ),
           ),
+          SizedBox(
+            height: 10,
+          )
         ],
       ),
     );
+  }
+
+  _signup() async {
+    showToast("Order successfully created");
+    _selectionConfirmation();
+    // Navigator.pushNamed(context, 'animalRegister');
+  }
+
+  Future<void> _selectionConfirmation() async {
+    return showDialog<void>(
+      context: context,
+      barrierDismissible: false, // user must tap button!
+      builder: (BuildContext context) {
+        return AlertDialog(
+          content: SingleChildScrollView(
+            child: ListBody(
+              children: <Widget>[
+                Text('Your order has been submited.'),
+                Text('It will be delivered soon'),
+              ],
+            ),
+          ),
+          actions: <Widget>[
+            FlatButton(
+              child: Text('OK'),
+              onPressed: () {
+                Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => CustomerHomePage(
+                         
+                       
+                        )),
+              );
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  void showToast(String msg, {int duration, int gravity}) {
+    Fluttertoast.showToast(
+        msg: msg,
+        toastLength: Toast.LENGTH_LONG,
+        gravity: ToastGravity.CENTER,
+        textColor: Colors.green,
+        fontSize: 16.0);
   }
 }

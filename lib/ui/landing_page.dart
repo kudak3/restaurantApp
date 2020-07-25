@@ -22,7 +22,7 @@ class _LandingPageState extends State<LandingPage> {
         body: Container(
       decoration: BoxDecoration(
         image: DecorationImage(
-          image: AssetImage(''),
+          image: AssetImage('asssets/food.jpeg'),
           fit: BoxFit.cover,
         ),
       ),
@@ -62,7 +62,7 @@ class _LandingPageState extends State<LandingPage> {
                     const SizedBox(width: 10.0),
                     Expanded(
                       child: RaisedButton(
-                        color: Colors.red,
+                        color: Colors.purple,
                         textColor: Colors.white,
                         elevation: 0,
                         shape: RoundedRectangleBorder(

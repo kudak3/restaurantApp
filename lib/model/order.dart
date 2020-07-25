@@ -1,4 +1,5 @@
 import 'package:json_annotation/json_annotation.dart';
+import 'package:restaurantapp/model/customer.dart';
 import 'package:restaurantapp/utils/custom_date_convertor.dart';
 part 'order.g.dart';
 
@@ -6,7 +7,7 @@ part 'order.g.dart';
 @CustomDateTimeConverter()
 class Order {
   int id;
-  int customer;
+  Customer customer;
   int restaurant;
   int driver;
   String address;

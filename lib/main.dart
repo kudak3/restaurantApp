@@ -1,10 +1,28 @@
 import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
 
+import 'service/customer_service.dart';
+import 'service/driver_service.dart';
+import 'ui/authentication_service.dart';
 import 'ui/login_page.dart';
 
 
 
-void main() => runApp(MyApp());
+
+
+void main() {
+  setupLocator();
+  runApp(MyApp());
+}
+
+void setupLocator(){
+   GetIt.I.registerLazySingleton(()=> DriverService());
+   GetIt.I.registerLazySingleton(()=> CustomerService());
+  GetIt.I.registerLazySingleton(()=> AuthenticationService());
+
+
+  
+}
 
 class MyApp extends StatelessWidget {
   @override
@@ -16,9 +34,7 @@ class MyApp extends StatelessWidget {
             accentColor: Colors.deepOrangeAccent,
             primarySwatch: Colors.deepPurple),
         home: Scaffold(
-          appBar: AppBar(
-            title: Text('List Application'),
-          ),
+         
           body: LoginPage(),
         ));
   }
