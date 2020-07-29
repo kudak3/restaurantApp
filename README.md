@@ -6,7 +6,8 @@ This mobile app allows customers to a restaurant to place orders on the system w
 
 Login Screen | Landingpage | 
 ------------ | ------------- |
-![Screenshot_20200725-220014](https://user-images.githubusercontent.com/52527906/88804804-b6d2bb80-d1ae-11ea-8330-a02a4f246c09.png) | ![Screenshot_20200725-220031](https://user-images.githubusercontent.com/52527906/88805183-22b52400-d1af-11ea-9a6e-57875db6cb8e.png) |
+<img src="https://user-images.githubusercontent.com/52527906/88804804-b6d2bb80-d1ae-11ea-8330-a02a4f246c09.png" alt="Original design" height="480"/> | <img src="https://user-images.githubusercontent.com/52527906/88805183-22b52400-d1af-11ea-9a6e-57875db6cb8e.png" alt="My result" height="480"/> |
+
 
 # Customer 
 Create Order | Confirm Order | Order Submited |
