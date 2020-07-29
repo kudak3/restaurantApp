@@ -5,7 +5,7 @@ This mobile app allows customers to a restaurant to place orders on the system w
 # Screenshots
 
 Create Account Screen | Login Screen | Success Screen | Last Screen | another | aneit | anaon | djdj | djudj | hshh |
------------- | -------------|--------------|--------------
+------------ | -------------|--------------|--------------|--------------|--------------|--------------|--------------|--------------|--------------
 ![Screenshot_20200725-220014](https://user-images.githubusercontent.com/52527906/88804804-b6d2bb80-d1ae-11ea-8330-a02a4f246c09.png) | 
 ![Screenshot_20200729-153605](https://user-images.githubusercontent.com/52527906/88807152-a2dc8900-d1b1-11ea-84b4-74989a45e1f4.png) | 
 ![Screenshot_20200729-153517](https://user-images.githubusercontent.com/52527906/88807161-a708a680-d1b1-11ea-936e-290da99ee7c9.png) | 
