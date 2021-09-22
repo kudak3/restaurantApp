@@ -1,6 +1,6 @@
 # restaurantapp
 A mobile application developed using Flutter framework.
-This mobile app allows customers to a restaurant to place orders on the system where drivers can view the orders and deliver them to their designated locations by following directions on a map on the mobile application.
+This mobile app allows customers of a restaurant to place orders on the system where drivers can view the orders and deliver them to their designated locations by following directions on a map on the mobile application.
 
 # Screenshots
 
