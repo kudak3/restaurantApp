@@ -9,6 +9,7 @@ To install the following components, please follow the React Native guide for yo
 To install the following components, please follow the Flutter guide for your platform
 - Android >= 7.0
 - Flutter sdk: ">=2.1.0 <3.0.0"
+
 Follow the steps of the official [Flutter documentation](https://docs.flutter.dev/get-started/install) to setup your development environment. 
 
 # Screenshots
