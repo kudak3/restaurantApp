@@ -3,7 +3,7 @@
 This mobile app allows customers of a restaurant to place orders on the system where drivers can view the orders and deliver them to their designated locations by following directions on a map on the mobile application.
 
 ## Getting Started
-To install the following components, please follow the React Native guide for your platform
+To install the following components, please follow the Flutter Installation guide for your platform
 
 ### Prerequisites
 To install the following components, please follow the Flutter guide for your platform
